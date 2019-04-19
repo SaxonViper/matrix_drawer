@@ -1,0 +1,15 @@
+.pixelBoard {
+    border: 1px solid #666;
+    border-collapse: collapse;
+}
+
+.pixelCell {
+    width: 20px;
+    height: 20px;
+    border-collapse: collapse;
+    cursor: pointer;
+}
+
+.pixelCell:hover {
+    -webkit-filter: brightness(120%);
+}
