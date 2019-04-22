@@ -20,4 +20,10 @@ class DrawController extends Controller
         $this->redirect('/');
     }
 
+    public function actionPixels()
+    {
+        $pixelBoard = new PixelBoard();
+        return $this->asJson($pixelBoard->getColors());
+    }
+
 }

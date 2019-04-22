@@ -1,6 +1,12 @@
+body {
+    background: ivory;
+    margin-top:  10px;
+}
+
 .pixelBoard {
-    border: 1px solid #666;
+    border: 2px solid #aa6;
     border-collapse: collapse;
+    margin: 15px auto;
 }
 
 .pixelCell {
@@ -8,8 +14,28 @@
     height: 20px;
     border-collapse: collapse;
     cursor: pointer;
+    padding: 0;
 }
 
 .pixelCell:hover {
     -webkit-filter: brightness(120%);
+}
+
+.pixelBoardCell {
+    width: 20px;
+    height: 20px;
+    border-collapse: collapse;
+    cursor: pointer;
+    padding: 0;
+    border: 1px solid #555;
+    box-sizing: border-box;
+    /*display: inline-block;
+    border-right: 1px solid #555;
+    border-bottom: 1px solid #555;*/
+}
+
+.pixelBoardCell:hover {
+    -webkit-filter: brightness(120%) contrast(120%) opacity(80%);
+    /*-webkit-box-shadow: #f00 inset 0 0 2px;*/
+    border: 2px inset red;
 }

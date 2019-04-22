@@ -1,0 +1,24 @@
+{
+  "name": "matrix_drawer",
+  "version": "1.0.0",
+  "description": "Matrix drawing project",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run dev -- --watch"
+  },
+  "devDependencies": {
+    "cross-env": "^3.2.3",
+    "laravel-mix": "2.1",
+    "webpack": "3.11"
+  },
+  "dependencies": {
+    "vue": "^2.5.14",
+    "axios": "^0.15.3",
+    "vue-router": "^3.0.1"
+  }
+}

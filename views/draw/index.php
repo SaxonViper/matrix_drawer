@@ -3,8 +3,8 @@
     <title>
         Матричная рисовалка
     </title>
-    <link rel="stylesheet" href="css/site.css" >
-    <link rel="stylesheet" href="css/board.css" >
+    <link rel="stylesheet" href="/css/site.css" >
+    <link rel="stylesheet" href="/css/board.css" >
 </head>
 <body>
 
@@ -26,9 +26,14 @@
         ?>
 
     </table>
-<?php
 
-?>
+    <div id="app">
+        <div>
+            <pixels></pixels>
+        </div>
+    </div>
 
 </body>
 </html>
+
+<script type="text/javascript" src="app.js"></script>
