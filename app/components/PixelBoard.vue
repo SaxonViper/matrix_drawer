@@ -7,7 +7,8 @@
         <table class="pixelBoard">
             <tr v-for="row in rowNumber" :key="row" class="pixelBoardRow">
                 <td v-for="col in colNumber" :key="col" class="pixelBoardCell"
-                    v-bind:style="{background: getColor(row, col)}">
+                    v-bind:style="{background: getColor(row, col)}"
+                    @click="clickCell(row, col)">
 
                 </td>
             </tr>
@@ -24,7 +25,8 @@
                 pixels: {},
                 rowNumber: 30,
                 colNumber: 30,
-                defaultColor: '#000000'
+                defaultColor: '#000000',
+                activeColor: '#ff0'
             }
         },
 
@@ -52,6 +54,10 @@
                         this.pixels[row][col] = this.defaultColor;
                     }
                 }
+            },
+            clickCell(row, col) {
+                console.log(row, col);
+                this.pixels[row][col] = this.activeColor;
             }
         },
 
