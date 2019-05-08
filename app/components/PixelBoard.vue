@@ -15,7 +15,10 @@
 
         <div class="actionButtons">
             <button class="clearButton" @click.prevent="clearAll">Очистить</button>
-            <button class="saveButton" @click.prevent="saveBoard">Сохранить</button>
+            <button class="saveButton" @click.prevent="saveBoard">ЗАЖЕЧЬ</button>
+            <button class="undoButton" @click.prevent="undoChanges">Отменить</button>
+            <!-- <button class="loadButton" @click.prevent="undoChanges">Загрузить</button>
+            <input id="imageLoad" type="file" name="image" style="display: none;" /> -->
         </div>
 
         <div class="colorPickPanel">
@@ -41,12 +44,14 @@
                     '#FFCAC2', '#FF8A00', '#FFAB48', '#FFC179', '#FFD4A3', '#FAFF06', '#FDFF9B',
                     '#20B808', '#22E203', '#5FFB46', '#A0FF90', '#00B2B2', '#43DCDC', '#9CF6F6',
                     '#D9FFFF', '#515498', '#7277EB', '#AFB2FC', '#E5E7FF', '#B722C3', '#E282EB',
-                    '#F5B5FB', '#FDE3FF']
+                    '#F5B5FB', '#FDE3FF'],
+                savedState: null,
+                isChanged: false
             }
         },
 
         mounted() {
-            this.loadPixels()
+            this.loadPixels();
         },
         methods: {
             getColor(row, col) {
@@ -60,6 +65,7 @@
                 axios.get('/draw/pixels').then(response => {
                     if (response.data) {
                         this.pixels = response.data;
+                        this.saveState();
                     }
                 })
             },
@@ -73,13 +79,14 @@
                 }
             },
             clickCell(row, col) {
+                this.isChanged = true;
                 this.pixels[row][col] = this.activeColor;
                 // this.saveBoard();
             },
             saveBoard() {
                 // Почему-то это не работает, приходится через родной запрос
                 // axios.post('/draw/save', JSON.stringify({pixels: this.pixels}), axiosConfig).then(response => {});
-
+                this.saveState();
                 var formData = new FormData(document.forms.person);
                 formData.append("pixels", JSON.stringify(this.pixels));
 
@@ -90,10 +97,19 @@
             getCellStyle(row, col) {
                 let cellColor = this.getColor(row, col);
                 let styles = {background: cellColor};
-                if (cellColor !== this.defaultColor) {
+                if (cellColor !== this.defaultColor && !this.isChanged) {
                     styles['box-shadow'] = '0 0 6px ' + cellColor;
                 }
                 return styles;
+            },
+            saveState() {
+                // Это идиотская конструкция для клонирования объекта, но без неё он просто копируется по ссылке! Арргх!
+                this.savedState = JSON.parse(JSON.stringify(this.pixels));
+                this.isChanged = false;
+            },
+            undoChanges() {
+                this.pixels = JSON.parse(JSON.stringify(this.savedState));
+                this.isChanged = false;
             }
         },
 
