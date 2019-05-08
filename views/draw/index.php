@@ -11,25 +11,24 @@
 
     <h1></h1>
 
-    <p>
+    <!-- <p>
         Здесь будет рисовалка в виде таблицы и интерфейса к ней
     </p>
     <table class="pixelBoard">
         <?php
-            for ($row = 1; $row <= 30; $row++) {
+            /* for ($row = 1; $row <= 30; $row++) {
                 echo '<tr>';
                 for ($col = 1 ; $col <=30; $col++) {
                     echo "<td class='pixelCell' data-row='{$row}' data-col='{$col}' style='background: {$pixelColors[$row][$col]}'></td>";
                 }
                 echo'</tr>';
-            }
+            } */
         ?>
-
-    </table>
+    </table> -->
 
     <div id="app">
         <div>
-            <pixels></pixels>
+            <pixel-board></pixel-board>
         </div>
     </div>
 

@@ -26,4 +26,12 @@ class DrawController extends Controller
         return $this->asJson($pixelBoard->getColors());
     }
 
+    public function actionSave()
+    {
+        $pixels = \Yii::$app->request->get('pixels', []);
+        if ($pixels) {
+            // todo - Сделать
+        }
+    }
+
 }

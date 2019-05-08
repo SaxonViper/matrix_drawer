@@ -4,7 +4,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-Vue.component('pixels', require('./components/PixelBoard.vue'));
+Vue.component('pixel-board', require('./components/PixelBoard.vue'));
 
 window.app = new Vue({
     el: '#app',
