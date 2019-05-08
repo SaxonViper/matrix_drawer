@@ -19,6 +19,14 @@ use yii\db\ActiveRecord;
  */
 class Pixel extends \yii\db\ActiveRecord
 {
+    const NULL_COLOR = [
+        'color_red' => 0,
+        'color_green' => 0,
+        'color_blue' => 0
+    ];
+
+    const NULL_HEX = '#000000';
+
     /**
      * {@inheritdoc}
      */

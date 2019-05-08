@@ -5,7 +5,6 @@
         <table class="pixelBoard">
             <tr v-for="row in rowNumber" :key="row" class="pixelBoardRow">
                 <td v-for="col in colNumber" :key="col" class="pixelBoardCell"
-                    v-bind:style="{background: getColor(row, col)}"
                     @mouseover="mouseOver"
                     @mousedown="mouseOver"
                     v-bind:data-col="col"
@@ -43,7 +42,7 @@
                 pixels: {},
                 rowNumber: 30,
                 colNumber: 30,
-                defaultColor: '#525252',
+                defaultColor: '#363636',
                 activeColor: '#ff0',
                 availableColors: ['#000000', '#AEAEAE', '#E1E1E1', '#FFFFFF', '#FF0707', '#FD4747', '#FF9D8F',
                     '#FFCAC2', '#FF8A00', '#FFAB48', '#FFC179', '#FFD4A3', '#FAFF06', '#FDFF9B',
@@ -78,7 +77,7 @@
                 if (confirm('Очистить доску?')) {
                     for (let row = 1; row <= this.rowNumber; row++) {
                         for (let col = 1; col <= this.colNumber; col++) {
-                            this.pixels[row][col] = this.defaultColor;
+                            this.pixels[row][col] = null;
                         }
                     }
                 }
@@ -97,8 +96,9 @@
                     }
                     let col = element.getAttribute('data-col');
                     let row = element.getAttribute('data-row');
-                    console.log(row);
-                    console.log(col);
+                    //console.log(row);
+                    //console.log(col);
+                    this.isChanged = true;
                     this.pixels[row][col] = this.activeColor;
                 }
             },
@@ -117,7 +117,7 @@
                 let cellColor = this.getColor(row, col);
                 let styles = {background: cellColor};
                 if (cellColor !== this.defaultColor && !this.isChanged) {
-                    styles['box-shadow'] = '0 0 6px ' + cellColor;
+                    styles['box-shadow'] = '0 0 10px ' + cellColor;
                 }
                 return styles;
             },
@@ -127,8 +127,10 @@
                 this.isChanged = false;
             },
             undoChanges() {
-                this.pixels = JSON.parse(JSON.stringify(this.savedState));
-                this.isChanged = false;
+                if (this.isChanged && confirm ('Сбросить изменения?')) {
+                    this.pixels = JSON.parse(JSON.stringify(this.savedState));
+                    this.isChanged = false;
+                }
             }
         },
 

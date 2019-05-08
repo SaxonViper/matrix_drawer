@@ -56,7 +56,11 @@ class PixelBoard
         $colors = [];
         foreach ($pixels as $pixel) {
             /** @var Pixel $pixel */
-            $colors[$pixel->row][$pixel->col] = $pixel->getHexColor();
+            $hexColor = $pixel->getHexColor();
+            if ($hexColor == Pixel::NULL_HEX) {
+                $hexColor = null;
+            }
+            $colors[$pixel->row][$pixel->col] = $hexColor;
         }
         return $colors;
     }
@@ -75,7 +79,8 @@ class PixelBoard
                 // Или вручную собирать один update
                 foreach ($pixels as $rowNumber => $row) {
                     foreach ($row as $colNumber => $color) {
-                        Pixel::updateAll(Pixel::fromHexColor($color), ['row' => $rowNumber, 'col' => $colNumber]);
+                        $pixelColors = $color ? Pixel::fromHexColor($color) : Pixel::NULL_COLOR;
+                        Pixel::updateAll($pixelColors, ['row' => $rowNumber, 'col' => $colNumber]);
                     }
                 }
                 $transaction->commit();
