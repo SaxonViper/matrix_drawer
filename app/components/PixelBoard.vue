@@ -5,7 +5,12 @@
         <table class="pixelBoard">
             <tr v-for="row in rowNumber" :key="row" class="pixelBoardRow">
                 <td v-for="col in colNumber" :key="col" class="pixelBoardCell"
-                    @click="clickCell(row, col)">
+                    v-bind:style="{background: getColor(row, col)}"
+                    @mouseover="mouseOver"
+                    @mousedown="mouseOver"
+                    v-bind:data-col="col"
+                    v-bind:data-row="row"
+                >
                     <div class="pixelLamp"
                          v-bind:style="getCellStyle(row, col)"
                     ></div>
@@ -82,6 +87,20 @@
                 this.isChanged = true;
                 this.pixels[row][col] = this.activeColor;
                 // this.saveBoard();
+            },
+            mouseOver(event) {
+                /* зажата левая кнопка мыши */
+                if (event.buttons == 1 || event.which == 1) {
+                    let element = event.target;
+                    while (element.tagName != 'TD' && element.parentElement) {
+                        element = element.parentElement;
+                    }
+                    let col = element.getAttribute('data-col');
+                    let row = element.getAttribute('data-row');
+                    console.log(row);
+                    console.log(col);
+                    this.pixels[row][col] = this.activeColor;
+                }
             },
             saveBoard() {
                 // Почему-то это не работает, приходится через родной запрос
