@@ -42,4 +42,13 @@ class DrawController extends Controller
         return $this->asJson(['success' => true]);
     }
 
+    public function actionImage()
+    {
+        // $image = 'https://ru.vuejs.org/images/logo.png';
+        // todo - Сделать логику, вернуть и обработать ответ
+        $image = \Yii::$app->request->post('image');
+
+
+    }
+
 }

@@ -21,8 +21,9 @@
             <button class="clearButton" @click.prevent="clearAll">Очистить</button>
             <button class="saveButton" @click.prevent="saveBoard">ЗАЖЕЧЬ</button>
             <button class="undoButton" @click.prevent="undoChanges">Отменить</button>
-            <!-- <button class="loadButton" @click.prevent="undoChanges">Загрузить</button>
-            <input id="imageLoad" type="file" name="image" style="display: none;" /> -->
+            <button class="loadButton" @click.prevent="showLoadDialog">Загрузить</button>
+            <input id="imageLoad" ref="image" type="file" name="image" style="display: none;"
+                   @change="loadImage($event.target)"/>
         </div>
 
         <div class="colorPickPanel">
@@ -130,6 +131,29 @@
                 if (this.isChanged && confirm ('Сбросить изменения?')) {
                     this.pixels = JSON.parse(JSON.stringify(this.savedState));
                     this.isChanged = false;
+                }
+            },
+            showLoadDialog() {
+                this.$refs.image.click();
+            },
+            loadImage(target) {
+                debugger;
+                let imageFile = target.files[0];
+                if (imageFile.size > 0) {
+                    console.log(target);
+                    if (!imageFile.type.match('image.*')) {
+                        alert('Выберите фалй с изображением!');
+                    }
+
+                    let formData = new FormData();
+                    let imageURL = URL.createObjectURL(imageFile);
+                    formData.append('image', imageFile);
+                    // Emit FormData & image URL to the parent component
+                    // this.$emit('input', { formData, imageURL });
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", '/draw/image');
+                    xhr.send(formData);
                 }
             }
         },
