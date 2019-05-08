@@ -61,6 +61,32 @@ class PixelBoard
         return $colors;
     }
 
+    /**
+     * @param $pixels
+     * @return bool
+     * @throws \Throwable
+     */
+    public function savePixels($pixels)
+    {
+        if ($pixels) {
+            $transaction = \Yii::$app->db->beginTransaction();
+            try {
+                // Возможно, каждую лампочку хранить отдельно смысла нет, т.к. это лишь плодить запросы
+                // Или вручную собирать один update
+                foreach ($pixels as $rowNumber => $row) {
+                    foreach ($row as $colNumber => $color) {
+                        Pixel::updateAll(Pixel::fromHexColor($color), ['row' => $rowNumber, 'col' => $colNumber]);
+                    }
+                }
+                $transaction->commit();
+                return true;
 
+                // todo - Здесь можно отправить запрос на зажигание лампочек
+            } catch (\Throwable $throwable) {
+                $transaction->rollBack();
+                throw $throwable;
+            }
+        }
+    }
 
 }

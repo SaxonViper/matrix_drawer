@@ -5,11 +5,9 @@
     </title>
     <link rel="stylesheet" href="/css/site.css" >
     <link rel="stylesheet" href="/css/board.css" >
+    <?= yii\helpers\Html::csrfMetaTags() ?>
 </head>
 <body>
-
-
-    <h1></h1>
 
     <!-- <p>
         Здесь будет рисовалка в виде таблицы и интерфейса к ней

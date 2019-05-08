@@ -79,6 +79,19 @@ class Pixel extends \yii\db\ActiveRecord
         return "#{$red}{$green}{$blue}";
     }
 
+    public static function fromHexColor($hexColor)
+    {
+        $red = substr($hexColor, 1, 2);
+        $green = substr($hexColor, 3, 2);
+        $blue = substr($hexColor, 5, 2);
+
+        return [
+            'color_red' => hexdec($red),
+            'color_green' => hexdec($green),
+            'color_blue' => hexdec($blue),
+        ];
+    }
+
     /**
      * @param int $decimal
      * @return string
