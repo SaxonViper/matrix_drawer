@@ -6,7 +6,11 @@
             <tr v-for="row in rowNumber" :key="row" class="pixelBoardRow">
                 <td v-for="col in colNumber" :key="col" class="pixelBoardCell"
                     v-bind:style="{background: getColor(row, col)}"
-                    @click="clickCell(row, col)">
+                    @mouseover="mouseOver"
+                    @mousedown="mouseOver"
+                    v-bind:data-col="col"
+                    v-bind:data-row="row"
+                >
                 </td>
             </tr>
         </table>
@@ -72,6 +76,14 @@
             },
             clickCell(row, col) {
                 this.pixels[row][col] = this.activeColor;
+            },
+            mouseOver(event) {
+                /* зажата левая кнопка мыши */
+                if (event.buttons == 1 || event.which == 1) {
+                    let col = event.target.getAttribute('data-col');
+                    let row = event.target.getAttribute('data-row');
+                    this.pixels[row][col] = this.activeColor;
+                }
             },
             saveBoard() {
                 axios.post('/draw/save', {pixels: this.pixels}).then(response => {});
