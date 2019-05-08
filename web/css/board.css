@@ -1,11 +1,12 @@
 body {
-    background: ivory;
+    background: #202020;
     margin-top:  10px;
+    color: ivory;
 }
 
 .pixelBoard {
-    border: 2px solid #aa6;
-    border-collapse: collapse;
+    /*border: 2px solid #aa6;
+    border-collapse: collapse;*/
     margin: 15px auto;
 }
 
@@ -22,22 +23,31 @@ body {
 }
 
 .pixelBoardCell {
-    width: 20px;
-    height: 20px;
+    width: 21px;
+    height: 21px;
     border-collapse: collapse;
     cursor: pointer;
     padding: 0;
-    border: 1px solid #555;
+    /*border: 1px solid #555;*/
     box-sizing: border-box;
+    text-align: center;
+    vertical-align: middle;
     /*display: inline-block;
     border-right: 1px solid #555;
     border-bottom: 1px solid #555;*/
 }
 
-.pixelBoardCell:hover {
-    -webkit-filter: brightness(120%) contrast(120%) opacity(80%);
-    /*-webkit-box-shadow: #f00 inset 0 0 2px;*/
-    border: 2px inset red;
+.pixelLamp {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+}
+
+.pixelBoardCell:hover .pixelLamp {
+    width: 19px;
+    height: 19px;
+    /*-webkit-filter: brightness(120%) contrast(120%) opacity(80%);*/
 }
 
 .drawerContainer {

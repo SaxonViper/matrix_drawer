@@ -5,8 +5,10 @@
         <table class="pixelBoard">
             <tr v-for="row in rowNumber" :key="row" class="pixelBoardRow">
                 <td v-for="col in colNumber" :key="col" class="pixelBoardCell"
-                    v-bind:style="{background: getColor(row, col)}"
                     @click="clickCell(row, col)">
+                    <div class="pixelLamp"
+                         v-bind:style="getCellStyle(row, col)"
+                    ></div>
                 </td>
             </tr>
         </table>
@@ -33,7 +35,7 @@
                 pixels: {},
                 rowNumber: 30,
                 colNumber: 30,
-                defaultColor: '#9a9a9a',
+                defaultColor: '#525252',
                 activeColor: '#ff0',
                 availableColors: ['#000000', '#AEAEAE', '#E1E1E1', '#FFFFFF', '#FF0707', '#FD4747', '#FF9D8F',
                     '#FFCAC2', '#FF8A00', '#FFAB48', '#FFC179', '#FFD4A3', '#FAFF06', '#FDFF9B',
@@ -84,6 +86,14 @@
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", '/draw/save');
                 xhr.send(formData);
+            },
+            getCellStyle(row, col) {
+                let cellColor = this.getColor(row, col);
+                let styles = {background: cellColor};
+                if (cellColor !== this.defaultColor) {
+                    styles['box-shadow'] = '0 0 6px ' + cellColor;
+                }
+                return styles;
             }
         },
 
