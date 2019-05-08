@@ -45,6 +45,10 @@ body {
     margin: 0 auto;
 }
 
+.drawerHeader {
+    text-align: center;
+}
+
 .actionButtons {
     margin-bottom: 10px;
     text-align: center;
@@ -62,6 +66,8 @@ body {
 
 .colorPickPanel {
     text-align: center;
+    width: 670px;
+    margin: 0 auto;
 }
 
 .colorPick {

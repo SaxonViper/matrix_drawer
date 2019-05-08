@@ -37,7 +37,7 @@
                 pixels: {},
                 rowNumber: 30,
                 colNumber: 30,
-                defaultColor: '#000000',
+                defaultColor: '#9a9a9a',
                 activeColor: '#ff0',
                 availableColors: ['#000000', '#AEAEAE', '#E1E1E1', '#FFFFFF', '#FF0707', '#FD4747', '#FF9D8F',
                     '#FFCAC2', '#FF8A00', '#FFAB48', '#FFC179', '#FFD4A3', '#FAFF06', '#FDFF9B',
@@ -76,6 +76,7 @@
             },
             clickCell(row, col) {
                 this.pixels[row][col] = this.activeColor;
+                // this.saveBoard();
             },
             mouseOver(event) {
                 /* зажата левая кнопка мыши */
@@ -86,7 +87,15 @@
                 }
             },
             saveBoard() {
-                axios.post('/draw/save', {pixels: this.pixels}).then(response => {});
+                // Почему-то это не работает, приходится через родной запрос
+                // axios.post('/draw/save', JSON.stringify({pixels: this.pixels}), axiosConfig).then(response => {});
+
+                var formData = new FormData(document.forms.person);
+                formData.append("pixels", JSON.stringify(this.pixels));
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", '/draw/save');
+                xhr.send(formData);
             }
         },
 
