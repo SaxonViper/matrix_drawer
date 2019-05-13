@@ -22,7 +22,7 @@
             <button class="saveButton" @click.prevent="saveBoard">ЗАЖЕЧЬ</button>
             <button class="undoButton" @click.prevent="undoChanges">Отменить</button>
             <button class="loadButton" @click.prevent="showLoadDialog">Загрузить</button>
-            <input id="imageLoad" ref="image" type="file" name="image" style="display: none;"
+            <input id="imageLoad" ref="image" type="file" name="Image[image]" style="display: none;"
                    @change="loadImage($event.target)"/>
         </div>
 
@@ -74,12 +74,13 @@
                     }
                 })
             },
-            clearAll() {
-                if (confirm('Очистить доску?')) {
-                    for (let row = 1; row <= this.rowNumber; row++) {
-                        for (let col = 1; col <= this.colNumber; col++) {
-                            this.pixels[row][col] = null;
-                        }
+            clearAll(ask = true) {
+                if (ask && !confirm('Очистить доску?')) {
+                    return false;
+                }
+                for (let row = 1; row <= this.rowNumber; row++) {
+                    for (let col = 1; col <= this.colNumber; col++) {
+                        this.pixels[row][col] = null;
                     }
                 }
             },
@@ -137,7 +138,7 @@
                 this.$refs.image.click();
             },
             loadImage(target) {
-                debugger;
+                // debugger;
                 let imageFile = target.files[0];
                 if (imageFile.size > 0) {
                     console.log(target);
@@ -147,13 +148,24 @@
 
                     let formData = new FormData();
                     let imageURL = URL.createObjectURL(imageFile);
-                    formData.append('image', imageFile);
+                    formData.append('Image[image]', imageFile);
                     // Emit FormData & image URL to the parent component
                     // this.$emit('input', { formData, imageURL });
-
+                    var t = this;
                     var xhr = new XMLHttpRequest();
                     xhr.open("POST", '/draw/image');
                     xhr.send(formData);
+                    xhr.onload = function() {
+                        console.log(xhr.responseText);
+                        var data = JSON.parse(xhr.responseText);
+                        if (data.pixels) {
+                            t.clearAll(false);
+                            setTimeout(function () {
+                                t.pixels = data.pixels;
+                                t.saveState();
+                            }, 50);
+                        }
+                    };
                 }
             }
         },
